@@ -42,6 +42,10 @@ lead-gen-ai-python/
 │   └── ai_agent.py      ← GPT-4o lead scoring with structured JSON output
 ├── data/
 │   └── sample_leads.csv ← 20 pre-built leads to demo without scraping
+├── .claude/
+│   ├── skills/          ← AI Sales Team: /sales orchestrator + 13 sub-skills
+│   └── agents/          ← 5 parallel Claude Code sub-agents
+├── setup.sh             ← one-command install of skills/agents to ~/.claude
 ├── requirements.txt
 └── README.md
 ```
@@ -70,6 +74,54 @@ define your ICP, and hit **Run Full Pipeline**.
 
 You'll get a public URL like `https://lead-gen-optimizer.streamlit.app`.
 Add your `OPENAI_API_KEY` as a **Secret** in the Streamlit dashboard.
+
+---
+
+## 🤖 AI Sales Team — Claude Code Sub-Agents
+
+This repo ships with the **AI Sales Team** suite for [Claude Code](https://docs.anthropic.com/en/docs/claude-code):
+**14 skills + 5 sub-agents that run in parallel** to research prospects, qualify leads
+(BANT + MEDDIC), find decision makers, write outreach sequences, prep meetings, and
+generate client-ready PDF pipeline reports — the perfect companion to the lead lists
+this app produces.
+
+Credit: built by [Zubair Trabzada](https://github.com/zubair-trabzada/ai-sales-team-claude)
+(AI Workshop — [skool.com/aiworkshop](https://www.skool.com/aiworkshop), free tier:
+[skool.com/aiworkshop-lite](https://www.skool.com/aiworkshop-lite)). Vendored under MIT —
+see `.claude/skills/sales/ATTRIBUTION.md`. His JARVIS voice-assistant pack lives in the
+Skool community.
+
+### Install on your machine (one command)
+
+```bash
+git pull
+./setup.sh
+```
+
+This copies the skills to `~/.claude/skills` and the sub-agents to `~/.claude/agents`,
+so `/sales` commands work in **any** project. (Opening Claude Code inside this repo also
+works with zero install — the `.claude/` folder auto-loads project-level skills.)
+
+### Commands
+
+| Command | What it does |
+|---|---|
+| `/sales prospect <url>` | **Flagship** — full analysis with 5 sub-agents in parallel, returns a Prospect Score |
+| `/sales quick <url>` | 60-second prospect snapshot |
+| `/sales research <url>` | Deep company research |
+| `/sales qualify <url>` | BANT + MEDDIC lead scoring |
+| `/sales contacts <url>` | Find decision makers |
+| `/sales outreach <prospect>` | Cold/warm/referral outreach sequences |
+| `/sales followup <prospect>` | Follow-up sequences |
+| `/sales prep <url>` | Meeting preparation brief |
+| `/sales proposal <client>` | Client proposal generation |
+| `/sales objections <topic>` | Objection-handling playbook |
+| `/sales icp <description>` | Ideal Customer Profile builder |
+| `/sales competitors <url>` | Competitive intelligence |
+| `/sales report` / `report-pdf` | Pipeline report (Markdown / PDF) |
+
+**Workflow tip:** run this app to scrape + score leads, export the hot list, then
+`/sales prospect <url>` each hot lead for a full 5-agent deep-dive and outreach sequence.
 
 ---
 
